@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Booggii Sensor</string>
+    <!-- Settings Activity Title -->
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_text_1">Settings</string>
+    <string name="tab_text_2">Log</string>
+    <string name="settings_fragment">Settings</string>
+    <string name="log_fragment">Log</string>
+    <string name="device_id">Device ID:</string>
+    <string name="ecg">ECG</string>
+    <string name="acc">ACC</string>
+    <string name="range">Range:</string>
+    <string name="sample_rate">Sample rate:</string>
+    <string name="resolution">Resolution:</string>
+    <string name="preference_file_key">com.booggii.sensor.preferences</string>
+    <string name="device_name">Device name:</string>
+    <string name="device_status">Status:</string>
+    <string name="device_features">Features:</string>
+    <string name="battery_level">Battery level:</string>
+</resources>
