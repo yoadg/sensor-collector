@@ -18,7 +18,7 @@ class TabsAdapter(private val myContext: Context, fm: FragmentManager, internal 
                 return SettingsFragment()
             }
             else -> {
-                return LogFragment()
+                return PlotterFragment()
             }
         }
     }

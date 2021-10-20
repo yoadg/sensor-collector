@@ -1,11 +1,12 @@
 package com.booggii.sensor.model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.booggii.sensor.devices.Status
+import com.booggii.sensor.devices.*
 
-class DeviceState : ViewModel() {
+class DeviceState : ViewModel(), DeviceStateListener {
     private val _status = MutableLiveData<Status>()
 
     val status: LiveData<Status>
@@ -26,6 +27,11 @@ class DeviceState : ViewModel() {
     val batteryLevel
         get() = _batteryLevel
 
+    private val _hrStream = LiveDataReactiveStreams.fromPublisher(DeviceManager)
+
+    val hrStream: LiveData<HRData>
+        get() = _hrStream
+
     init {
         _status.value = Status.DISCONNECTED
         _btPower.value = false
@@ -44,19 +50,32 @@ class DeviceState : ViewModel() {
         return _status.value == Status.DISCONNECTED && _btPower.value == true
     }
 
-    fun onStatusChange(status: Status) {
-        _status.value = status
-    }
 
-    fun onBtPowerChange(power: Boolean) {
+    override fun btPowerChanged(power: Boolean) {
         _btPower.value = power
     }
 
-    fun onStreamReady(stream: String) {
-        _streams.value!!.add(stream)
+    override fun batteryLevelChanged(level: Int) {
+        _batteryLevel.value = level
     }
 
-    fun onBatteryLevelChange(level: Int) {
-        _batteryLevel.value = level
+    override fun hrDataReceived(data: HRData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun ecgDataReceived(data: ECGData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun accDataReceived(data: ACCData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun statusChanged(status: Status) {
+        _status.value = status
+    }
+
+    override fun streamReady(stream: String) {
+        _streams.value!!.add(stream)
     }
 }

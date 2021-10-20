@@ -6,12 +6,14 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import com.booggii.sensor.databinding.ActivityMainBinding
 import com.booggii.sensor.devices.DeviceManager
 import com.booggii.sensor.ui.TabsAdapter
-import com.booggii.sensor.utils.Logger
+import com.booggii.sensor.services.Logger
+import com.booggii.sensor.services.Streamer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 fun FloatingActionButton.toggleEnabled(enabled: Boolean) {
@@ -34,8 +36,15 @@ class MainActivity : AppCompatActivity() {
     var viewPager: ViewPager? = null
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            DeviceManager.init(this)
+        } catch (e: Throwable) {
+            Logger.error(TAG, "Failed to initialize", e)
+            finish()
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -44,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Device"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Settings"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Log"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Data"))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
         val adapter = TabsAdapter(this, supportFragmentManager, tabLayout!!.tabCount)
@@ -63,7 +72,6 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
-        DeviceManager.init(this)
 
         val fab: FloatingActionButton = binding.fab
         fab.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
@@ -80,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        DeviceManager.deviceState.status.observe(this, { status ->
+        DeviceManager.deviceState.status.observe(this, { _ ->
             if (DeviceManager.deviceState.isConnected()) {
                 fab.setImageResource(android.R.drawable.ic_media_pause)
                 fab.backgroundTintList = ColorStateList.valueOf(Color.rgb(255,51,51))

@@ -19,6 +19,20 @@
             android:layout_height="match_parent"
             android:gravity="start"
             android:textSize="20sp"
+            android:text="@string/user_id" />
+        <EditText
+            android:id="@+id/user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="10"
+            android:gravity="center"
+            android:inputType="textCapCharacters"
+            android:importantForAutofill="no" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:textSize="20sp"
             android:text="@string/device_id" />
         <EditText
             android:id="@+id/device_id"

@@ -1,4 +1,4 @@
-package com.booggii.sensor.utils
+package com.booggii.sensor.services
 
 import android.util.Log
 import org.reactivestreams.Publisher
@@ -16,8 +16,8 @@ object Logger: Publisher<String> {
         Log.d(tag, message)
     }
 
-    fun error(tag: String, message: String) {
-        Log.e(tag, message)
+    fun error(tag: String, message: String, exception: Throwable?) {
+        Log.e(tag, message, exception)
     }
 
     fun warning(tag: String, message: String) {

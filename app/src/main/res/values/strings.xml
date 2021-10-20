@@ -7,6 +7,7 @@
     <string name="tab_text_2">Log</string>
     <string name="settings_fragment">Settings</string>
     <string name="log_fragment">Log</string>
+    <string name="user_id">User ID:</string>
     <string name="device_id">Device ID:</string>
     <string name="ecg">ECG</string>
     <string name="acc">ACC</string>
@@ -18,4 +19,7 @@
     <string name="device_status">Status:</string>
     <string name="device_features">Features:</string>
     <string name="battery_level">Battery level:</string>
+    <string name="hr_title">HR and RR vs. Time (for 5 min)</string>
+    <string name="hr_range_title">HR, /sec RR, ms/10</string>
+
 </resources>

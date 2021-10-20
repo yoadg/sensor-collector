@@ -1,12 +1,16 @@
 package com.booggii.sensor.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import com.booggii.sensor.databinding.FragmentSettingsBinding
 import com.booggii.sensor.devices.DeviceManager
 
@@ -23,13 +27,40 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         with (binding) {
+            val userId = userId
+            userId.setText(DeviceManager.settings.userId)
+            userId.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    DeviceManager.settings.userId = s.toString()
+                }
+
+                override fun beforeTextChanged(s: CharSequence, start: Int,
+                                               count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int,
+                                           before: Int, count: Int) {
+                }
+
+
+            })
             val deviceId = deviceId
             deviceId.setText(DeviceManager.settings.deviceId)
-            ecg.isEnabled = DeviceManager.settings.ecg
-            DeviceManager.ecgRates.forEach {
-                this.ecgRate.addView(createRadioButton(it))
-            }
-            deviceId.setText(DeviceManager.settings.deviceId)
+            deviceId.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    DeviceManager.settings.deviceId = s.toString()
+                }
+
+                override fun beforeTextChanged(s: CharSequence, start: Int,
+                                               count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int,
+                                           before: Int, count: Int) {
+                }
+
+
+            })
             ecg.isEnabled = DeviceManager.settings.ecg
             DeviceManager.ecgRates.forEach {
                 ecgRate.addView(createRadioButton(it))
@@ -38,6 +69,7 @@ class SettingsFragment : Fragment() {
             ecgRate.setOnCheckedChangeListener { _, checkedId ->
                 DeviceManager.settings.ecgSampleRate = checkedId
             }
+
             DeviceManager.ecgRes.forEach {
                 ecgRes.addView(createRadioButton(it))
             }
@@ -45,6 +77,7 @@ class SettingsFragment : Fragment() {
             ecgRes.setOnCheckedChangeListener { _, checkedId ->
                 DeviceManager.settings.ecgResolution = checkedId
             }
+
             acc.isEnabled = DeviceManager.settings.acc
             DeviceManager.accRates.forEach {
                 accRate.addView(createRadioButton(it))
@@ -53,6 +86,7 @@ class SettingsFragment : Fragment() {
             accRate.setOnCheckedChangeListener { _, checkedId ->
                 DeviceManager.settings.accSampleRate = checkedId
             }
+
             DeviceManager.accRes.forEach {
                 accRes.addView(createRadioButton(it))
             }

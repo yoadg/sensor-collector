@@ -3,9 +3,11 @@ package com.booggii.sensor.devices
 import android.content.SharedPreferences
 
 const val DEFAULT_DEVICE = "96CE632E"
+const val DEFAULT_USER = "booggii"
 
-class Settings(val pref: SharedPreferences) {
+class Settings(private val pref: SharedPreferences) {
     companion object {
+        const val USER_ID = "user_id"
         const val DEVICE_ID = "device_id"
         const val ECG = "ecg"
         const val ECG_SAMPLE_RATE = "ecg_sample_rate"
@@ -16,6 +18,15 @@ class Settings(val pref: SharedPreferences) {
         const val ACC_RESOLUTION = "acc_resolution"
 
     }
+
+    var userId: String
+        get() = pref.getString(USER_ID, DEFAULT_USER)!!
+        set(userId) {
+            with (pref.edit()) {
+                putString(USER_ID, userId)
+                apply()
+            }
+        }
 
     var deviceId: String
         get() = pref.getString(DEVICE_ID, DEFAULT_DEVICE)!!
@@ -89,9 +100,6 @@ class Settings(val pref: SharedPreferences) {
             }
         }
 
-/*
-
-*/
 
 
 }
